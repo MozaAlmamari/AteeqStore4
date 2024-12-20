@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+    <!-- Link to external CSS files -->
+    <link rel="stylesheet" href="theme.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for buttons */
+        .btn-primary {
+            background-color: #4a2c2a !important;
+            border-color: #4a2c2a !important;
+        }
+        .btn-primary:hover {
+            background-color: #3e251f !important;
+            border-color: #3e251f !important;
+        }
+        
+        /* Custom card image styling */
+        .card-img-top {
+            width: 100%;             
+            height: 350px;           
+            object-fit: cover;        
+        }
+        
+        /* Custom table layout for displaying products */
+        .d-table {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            background-color: rgba(255, 255, 255, 0.3); 
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .d-table-row {
+            display: table-row;
+        }
+        .d-table-row > .card {
+            display: table-cell;
+            vertical-align: top;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+     <!-- header -->
+    <header>
+        <div class="header-container">
+            <img src="Picture1.png" alt="Ateeq Logo" class="logo">
+            <h1>Shop</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="community.html">Community</a></li>
+                    <li><a href="contact(Questionnaire).html">Contact Us</a></li>
+                    <li><a href="myaccount(calculation).html">My Account</a></li>
+                    <li><a href="aboutUs.html">About Us</a></li>
+                    <li><a href="fungame.html">Fun Game</a></li>
+                    <li><a href="manage.php">Manage Products</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mt-4">
+        <!-- search bar  -->
+        <div class="search-section mb-4">
+            <div class="input-group">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search for products..." aria-label="Search for products">
+                <button class="btn btn-primary" onclick="applyFilters()">Search</button>
+            </div>
+        </div>
+
+        <!-- filter section  -->
+        <div class="filter-section mb-4">
+            <form class="row g-3" id="filterForm">
+                <div class="col-md-4">
+                    <label for="categoryFilter" class="form-label">Category</label>
+                    <select id="categoryFilter" class="form-select">
+                        <option value="all">All</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="devices">Devices</option>
+                        <option value="paintings">Paintings</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="priceFilter" class="form-label">Price</label>
+                    <select id="priceFilter" class="form-select">
+                        <option value="all">All</option>
+                        <option value="low-high">Low to High</option>
+                        <option value="high-low">High to Low</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="weightFilter" class="form-label">Weight</label>
+                    <select id="weightFilter" class="form-select">
+                        <option value="all">All</option>
+                        <option value="low-high">Low to High</option>
+                        <option value="high-low">High to Low</option>
+                    </select>
+                </div>                
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary w-100" onclick="applyFilters()">Apply Filters</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- dynamic container for displaying product cards -->
+        <div id="cardContainer" class="d-table">
+            <!-- dynamic rows and cards -->
+        </div>
+    </main>
+
+    <footer>
+        <!-- footer section -->
+        <p>&copy; 2024 Ateeq. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // product class to define product properties
+        class Product {
+            constructor(image, name, category, price, weight) {
+                this.image = image;
+                this.name = name;
+                this.category = category;
+                this.price = price;
+                this.weight = weight;
+            }
+        }
+
+        // add products in a arry
+        const products = [
+            new Product('p1.jpg', 'Terracotta Plate', 'furniture', 590.75, 1.2),
+            new Product('p2.jpg', 'Art Déco Radio', 'devices', 250.0, 0.92),
+            new Product('P3.png', 'Vintage Old Stone', 'furniture', 1966.46, 2.00),
+            new Product('p4.png', 'Old Arabic Teapot', 'furniture', 6.9, 1.30),
+            new Product('P5.png', 'Compass and Clock', 'devices', 16.7, 0.43),
+            new Product('P6.png', 'Gulab Sprinkle', 'paintings', 8.0, 0.63),
+            new Product('P7.png', 'Frame', 'paintings', 4.0, 0.13)
+        ];
+
+        // displayProducts function to display products based on filter
+        function displayProducts(filteredProducts) {
+            const container = document.getElementById('cardContainer');
+            container.innerHTML = ''; // clear existing content
+
+            let tableRow = document.createElement('div');
+            tableRow.classList.add('d-table-row');
+
+            // loop through filtered products to create product cards
+            filteredProducts.forEach((product, index) => {
+                const card = document.createElement('div');
+                card.classList.add('card', 'col-md-4', 'mb-4', 'h-100');
+
+                // populate the card with product details and properties and the bottens
+                card.innerHTML = `
+                    <img src="${product.image}" class="card-img-top" alt="${product.name}">
+                    <div class="card-body">
+                        <h5 class="card-title">${product.name}</h5>
+                        <p class="card-text"><strong>Category:</strong> ${product.category}</p>
+                        <p class="card-text"><strong>Weight:</strong> ${product.weight} kg</p>
+                        <p class="card-text"><strong>Price:</strong> ${product.price.toFixed(2)} OR</p>
+                        <a href="product${index + 1}.html" class="btn btn-primary" style="display: grid;">View Details</a>
+                        <a href="#" class="btn btn-secondary mt-2" style="display: grid;" onclick="addToWishlist('${product.name}', '${product.image}')">Add to Wishlist</a>
+                        <a href="#" class="btn btn-success mt-2" style="display: grid;" onclick="addToCart('${product.name}', '${product.image}', ${product.price})">Add to Cart</a>
+                    </div>
+                `;
+
+                tableRow.appendChild(card);
+
+                // add a new row after every 3 products
+                if ((filteredProducts.indexOf(product) + 1) % 3 === 0) {
+                    container.appendChild(tableRow);
+                    tableRow = document.createElement('div');
+                    tableRow.classList.add('d-table-row');
+                }
+            });
+
+            // append any remaining cards if they are less than 3
+            if (tableRow.children.length > 0) {
+                container.appendChild(tableRow);
+            }
+        }
+
+        // applyFilters function to apply filters based on user input
+        function applyFilters() {
+            // get the filter criteria from the form
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const priceFilter = document.getElementById('priceFilter').value;
+            const weightFilter = document.getElementById('weightFilter').value;
+            
+            // start with all products
+            let filteredProducts = [...products];
+
+            // filter by search input 
+            if (searchInput) {
+                filteredProducts = filteredProducts.filter(product =>
+                    product.name.toLowerCase().includes(searchInput)
+                );
+            }
+
+            // filter by category
+            if (categoryFilter !== 'all') {
+                filteredProducts = filteredProducts.filter(product => product.category === categoryFilter);
+            }
+
+            // sort by price if selected
+            if (priceFilter === 'low-high') {
+                filteredProducts.sort((a, b) => a.price - b.price);
+            } else if (priceFilter === 'high-low') {
+                filteredProducts.sort((a, b) => b.price - a.price);
+            }
+
+            // sort by weight if selected
+            if (weightFilter === 'low-high') {
+                filteredProducts.sort((a, b) => a.weight - b.weight);
+            } else if (weightFilter === 'high-low') {
+                filteredProducts.sort((a, b) => b.weight - a.weight);
+            }
+
+            // display the filtered products
+            displayProducts(filteredProducts);
+        }
+
+        // addToWishlist function to add products to the wishlist
+        function addToWishlist(name, image) {
+            let wishlist = JSON.parse(sessionStorage.getItem("wishlist")) || [];
+
+            // check if the product is already in the wishlist
+            if (wishlist.some(item => item.name === name)) {
+                alert(`${name} is already in your wishlist!`);
+                return;
+            }
+
+            // add the product to the wishlist
+            wishlist.push({ name, image });
+            sessionStorage.setItem("wishlist", JSON.stringify(wishlist));
+            alert(`${name} added to your wishlist!`);
+        }
+
+        // function to add products to the cart
+        function addToCart(name, image, price) {
+            let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+            // check if the product is already in the cart
+            if (cart.some(item => item.name === name)) {
+                alert(`${name} is already in your cart!`);
+                return;
+            }
+
+            // add the product to the cart
+            cart.push({ name, image, price });
+            sessionStorage.setItem("cart", JSON.stringify(cart));
+            alert(`${name} has been added to your cart!`);
+        }
+
+        // display products when the page is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            displayProducts(products);
+        });
+    </script>
+</body>
+</html>

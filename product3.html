@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product 3 - Vintage Old Stone</title>
+    <link rel="stylesheet" href="theme.css">
+    <header><div class="header-container">
+        <img src="Picture1.png" alt="Ateeq Logo" class="logo">
+        <h1>Shop</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="contact(Questionnaire).html">Contact Us</a></li>
+                <li><a href="myaccount(calculation).html">My Account</a></li>
+                <li><a href="aboutUs.html">About Us</a></li>
+                <li><a href="fungame.html">Fun Game</a></li>
+                <li><a href="manage.php">Manage Products</a></li>
+            </ul>
+        </nav>
+    </div></header>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .product-detail {
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .product-detail h2 {
+            margin-top: 0;
+            color: #4a2c2a;
+        }
+        .product-image {
+            flex: 1;
+            max-width: 200px;
+        }
+        .product-image img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .product-info {
+            flex: 2;
+        }
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .product-table td, .product-table th {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .product-table th {
+            background-color: #f0e6dc;
+            color: #4a2c2a;
+        }
+        .price {
+            font-size: 24px;
+            color: #4a2c2a;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4a2c2a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        
+        // constructor function for creating Product 3 
+        function Product3(name, description, dimensions, weight, price) {
+            this.name = name;            // Product name
+            this.description = description;  // Product description
+            this.dimensions = dimensions;    // Product dimensions
+            this.weight = weight;            // Product weight
+            this.price = price;              // Product price
+        }
+
+        // initializing the product array for Product 3 with details
+        var products3 = [
+            new Product3("Vintage Old Stone", "Stone very fine eagle shapes vessel with lid", "10 x 7 x 9 inches", "2.00 kg", 1966.46)
+        ];
+
+        // displayProducts function to display product details in the table
+        function displayProducts(products, tableId) {
+            var table = document.getElementById(tableId);  // get the table by ID
+            table.innerHTML = "";  // clear any existing rows in the table
+
+            // add table headers (Feature and Details)
+            var headerRow = table.insertRow();
+            var headers = ["Feature", "Details"];
+            for (var i = 0; i < headers.length; i++) {
+                var cell = headerRow.insertCell();
+                cell.innerHTML = headers[i];
+            }
+
+            
+            // add product data to the table
+            products.forEach(function(product) {
+                var row = table.insertRow();
+                row.insertCell(0).innerHTML = "Product Name";  // insert product name
+                row.insertCell(1).innerHTML = product.name;
+
+                row = table.insertRow();
+                row.insertCell(0).innerHTML = "Description";   // insert product description
+                row.insertCell(1).innerHTML = product.description;
+
+                row = table.insertRow();
+                row.insertCell(0).innerHTML = "Dimensions";    // insert product dimensions
+                row.insertCell(1).innerHTML = product.dimensions;
+
+                row = table.insertRow();
+                row.insertCell(0).innerHTML = "Weight";        // insert product weight
+                row.insertCell(1).innerHTML = product.weight;
+
+                row = table.insertRow();
+                row.insertCell(0).innerHTML = "Price";         // insert product price with OR currency
+                row.insertCell(1).innerHTML = `${product.price.toFixed(2)} OR`;
+            });
+        }
+
+        // function to add product to the shopping cart
+        function addToCart(name, image, price) {
+            // retrieve the cart data from sessionStorage
+            let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+            // check if the product is already in the cart
+            if (cart.some(item => item.name === name)) {
+                alert(`${name} is already in your cart!`);  // alert user 
+                return;
+            }
+
+            // add the new product to the cart
+            cart.push({ name, image, price });
+            sessionStorage.setItem("cart", JSON.stringify(cart));  // save updated cart to sessionStorage
+            alert(`${name} has been added to your cart!`);  // alert user that product has been added
+        }
+
+        // initial display of products when the DOM is fully loaded
+        window.onload = function() {
+            displayProducts(products3, "productTable3");  // dsplay the product details in the table
+        }
+    </script>
+</head>
+<body>
+    <main>
+        <section class="product-detail">
+            <div class="product-image">
+                <img src="P3.png" alt="Vintage Old Stone">
+            </div>
+            <div class="product-info">
+                <h2>Vintage Old Stone</h2>
+                <table id="productTable3" class="product-table"></table>
+                <button onclick="addToCart('Vintage Old Stone', 'P3.png', 1966.46)">Add to Cart</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Ateeq. All rights reserved.</p>
+        <p>Email: <a href="mailto:info@ateeqart.com">info@ateeqart.com</a></p>
+    </footer>
+</body>
+</html>

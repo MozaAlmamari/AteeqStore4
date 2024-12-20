@@ -1,0 +1,62 @@
+/* Container styling for About Us page */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+h2 {
+    color: #8b5e34;
+    font-family: 'Georgia', serif;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p {
+    font-family: 'Georgia', serif;
+    text-align: center;
+}
+
+/* Team section styling */
+.team-container {
+    display: flex;
+    gap: 20px;  
+    justify-content: center;  
+    margin-top: 20px;
+}
+
+.card {
+    width: 150px;  
+    background-color: #b77239ef;  
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.card-img-top {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.card-title {
+    font-size: 1.1em;
+    font-family: 'Arial', sans-serif;
+    margin: 10px 0;
+}
+
+/* Info section styling */
+.container-fluid.info-container {
+    width: 100%;
+    background-color: #dedede;
+    color: #000000;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+}
+
+.info-container p {
+    margin: 0;
+    line-height: 1.6;
+}

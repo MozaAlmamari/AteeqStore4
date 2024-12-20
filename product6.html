@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product - Sprinkle</title>
+    <link rel="stylesheet" href="theme.css">
+    <header><div class="header-container">
+        <img src="Picture1.png" alt="Ateeq Logo" class="logo">
+        <h1>Shop</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="contact(Questionnaire).html">Contact Us</a></li>
+                <li><a href="myaccount(calculation).html">My Account</a></li>
+                <li><a href="aboutUs.html">About Us</a></li>
+                <li><a href="fungame.html">Fun Game</a></li>
+                <li><a href="manage.php">Manage Products</a></li>
+            </ul>
+        </nav>
+    </div></header>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .product-detail {
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .product-detail h2 {
+            margin-top: 0;
+            color: #4a2c2a;
+        }
+        .product-image {
+            flex: 1;
+            max-width: 200px;
+        }
+        .product-image img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .product-info {
+            flex: 2;
+        }
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .product-table td, .product-table th {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .product-table th {
+            background-color: #f0e6dc;
+            color: #4a2c2a;
+        }
+        .price {
+            font-size: 24px;
+            color: #4a2c2a;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4a2c2a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        // constructor function Product6
+        function Product6(name, description, dimensions, weight, price) {
+            this.name = name; // name of the product
+            this.description = description; // description of the product
+            this.dimensions = dimensions; // dimensions of the product
+            this.weight = weight; // weight of the product
+            this.price = price; // price of the product
+        }
+
+        // initializing the product array with a single product
+        var products = [
+            new Product6("Sprinkle", "Gulab pash rose water sprinkle", "7 x 3 x 7 inches", "0.63 kg", 8.000)
+        ];
+
+        // displayProducts function to display product details in the HTML table
+        function displayProducts(products, tableId) {
+            var table = document.getElementById(tableId); // get the table element by its ID
+            table.innerHTML = ""; // clear any existing rows in the table
+
+            // add table headers (Feature, Details)
+            var headerRow = table.insertRow();
+            var headers = ["Feature", "Details"];
+            for (var i = 0; i < headers.length; i++) {
+                var cell = headerRow.insertCell(); // insert a new header cell
+                cell.innerHTML = headers[i]; // set the text for the header
+            }
+
+            
+            // add product data to the table
+            products.forEach(function(product) {
+                // add product name row
+                var row = table.insertRow();
+                row.insertCell(0).innerHTML = "Product Name"; // first cell for feature name
+                row.insertCell(1).innerHTML = product.name; // second cell for product name
+
+                // add description row
+                row = table.insertRow();
+                row.insertCell(0).innerHTML = "Description"; // first cell for feature name
+                row.insertCell(1).innerHTML = product.description; // second cell for product description
+
+                // Add dimensions row
+                row = table.insertRow();
+                row.insertCell(0).innerHTML = "Dimensions"; // first cell for feature name
+                row.insertCell(1).innerHTML = product.dimensions; // second cell for product dimensions
+
+                // Add weight row
+                row = table.insertRow();
+                row.insertCell(0).innerHTML = "Weight"; // first cell for feature name
+                row.insertCell(1).innerHTML = product.weight; // second cell for product weight
+
+                // Add price row
+                row = table.insertRow();
+                row.insertCell(0).innerHTML = "Price"; // first cell: feature name
+                row.insertCell(1).innerHTML = `${product.price.toFixed(3)} OR`; // second cell for product price (formatted to 3 decimal places)
+            });
+        }
+
+        // function to add product to the shopping cart
+        function addToCart(name, image, price) {
+            // retrieve the current cart from sessionStorage or initialize it as an empty array 
+            let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+            // check if the product already exists in the cart
+            if (cart.some(item => item.name === name)) {
+                alert(`${name} is already in your cart!`); // alert if product already in the cart
+                return; // exit the function if the product is already in the cart
+            }
+
+            // add the new product to the cart
+            cart.push({ name, image, price });
+
+            // store the updated cart in sessionStorage
+            sessionStorage.setItem("cart", JSON.stringify(cart));
+
+            // alert the user that the product has been added to the cart
+            alert(`${name} has been added to your cart!`);
+        }
+
+        // display the product details when the page loads
+        window.onload = function() {
+            displayProducts(products, "productTable"); // call the function to display the product details in the table
+        }
+    </script>
+</head>
+<body>
+    <main>
+        <section class="product-detail">
+            <div class="product-image">
+                <img src="P6.png" alt="Sprinkle">
+            </div>
+            <div class="product-info">
+                <h2>Sprinkle</h2>
+                <table id="productTable" class="product-table"></table>
+                <button onclick="addToCart('Sprinkle', 'P6.png', 8.000)">Add to Cart</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Ateeq. All rights reserved.</p>
+        <p>Email: <a href="mailto:info@ateeqart.com">info@ateeqart.com</a></p>
+    </footer>
+</body>
+</html>

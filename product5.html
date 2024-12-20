@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product - Compass and Clock</title>
+    <link rel="stylesheet" href="theme.css">
+    <header>
+        <div class="header-container">
+            <img src="Picture1.png" alt="Ateeq Logo" class="logo">
+            <h1>Shop</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="community.html">Community</a></li>
+                    <li><a href="contact(Questionnaire).html">Contact Us</a></li>
+                    <li><a href="myaccount(calculation).html">My Account</a></li>
+                    <li><a href="aboutUs.html">About Us</a></li>
+                    <li><a href="fungame.html">Fun Game</a></li>
+                    <li><a href="manage.php">Manage Products</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <style>
+        /* Basic page styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .product-detail {
+            max-width: 700px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .product-detail h2 {
+            margin-top: 0;
+            color: #4a2c2a;
+        }
+        .product-image {
+            flex: 1;
+            max-width: 200px;
+        }
+        .product-image img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .product-info {
+            flex: 2;
+        }
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .product-table td, .product-table th {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .product-table th {
+            background-color: #f0e6dc;
+            color: #4a2c2a;
+        }
+        .price {
+            font-size: 24px;
+            color: #4a2c2a;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4a2c2a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        // Constructor function for creating a product5 object
+        function Product4(name, description, dimensions, weight, price) {
+            this.name = name;            // Product's name 
+            this.description = description;  // A brief description 
+            this.dimensions = dimensions;    // Dimensions of the product 
+            this.weight = weight;           // Weight of the product 
+            this.price = price;             // Price of the product 
+        }
+
+        // Initialize an array of products 
+        var products = [
+            new Product4("Compass and Clock", "Compass and clock in a wooden box", "5 x 5 x 5 inches", "0.43 kg", 16.700)
+        ];
+
+        // displayProducts function to display the product details in a table
+        function displayProducts(products, tableId) {
+            var table = document.getElementById(tableId);  // Get the table element by its ID
+            table.innerHTML = "";  // clear any existing content in the table
+
+            // add table headers 
+            var headerRow = table.insertRow();  // Create the header 
+            var headers = ["Feature", "Details"];  // Headers for  information
+            for (var i = 0; i < headers.length; i++) {
+                var cell = headerRow.insertCell();  // create a new header cell
+                cell.innerHTML = headers[i];  // add header text to each cell
+            }
+
+            // add product data to the table
+            products.forEach(function(product) {
+                var row = table.insertRow();
+                row.insertCell(0).innerHTML = "Product Name";  // insert product name
+                row.insertCell(1).innerHTML = product.name;
+
+                row = table.insertRow();
+                row.insertCell(0).innerHTML = "Description";   // insert product description
+                row.insertCell(1).innerHTML = product.description;
+
+                row = table.insertRow();
+                row.insertCell(0).innerHTML = "Dimensions";    // insert product dimensions
+                row.insertCell(1).innerHTML = product.dimensions;
+
+                row = table.insertRow();
+                row.insertCell(0).innerHTML = "Weight";        // insert product weight
+                row.insertCell(1).innerHTML = product.weight;
+
+                row = table.insertRow();
+                row.insertCell(0).innerHTML = "Price";         // insert product price with OR currency
+                row.insertCell(1).innerHTML = `${product.price.toFixed(2)} OR`;
+            });
+        }
+
+        // function to handle adding the product to the shopping cart
+        function addToCart(name, image, price) {
+            // retrieve the cart data from sessionStorage 
+            let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+            // check if the product is already in the cart
+            if (cart.some(item => item.name === name)) {
+                alert(`${name} is already in your cart!`);  // alert if the product is already in the cart
+                return;  // exit the function without adding the product again
+            }
+
+            // add the product to the cart array
+            cart.push({ name, image, price });
+
+            // store the updated cart array in sessionStorage for later use
+            sessionStorage.setItem("cart", JSON.stringify(cart));
+
+            // alert the user that the product has been added to the cart
+            alert(`${name} has been added to your cart!`);
+        }
+
+        // when the page loads, display the product details in the table
+        window.onload = function() {
+            displayProducts(products, "productTable");  // display product details in the table
+        }
+    </script>
+</head>
+<body>
+    <main>
+        <!-- section for product -->
+        <section class="product-detail">
+            <div class="product-image">
+                <img src="P5.png" alt="Compass and Clock">  
+            </div>
+            <div class="product-info">
+                <h2>Compass and Clock</h2>  
+                <table id="productTable" class="product-table"></table>  <!-- table for displaying product details -->
+                <button onclick="addToCart('Compass and Clock', 'P5.png', 16.700)">Add to Cart</button>  <!-- add to cart Button -->
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Ateeq. All rights reserved.</p>
+        <p>Email: <a href="mailto:info@ateeqart.com">info@ateeqart.com</a></p>  
+    </footer>
+</body>
+</html>

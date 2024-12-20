@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="theme.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .map-section, .feedback-section, .message-box {
+            background-color: rgba(255, 255, 255, 0.75);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .map-section h3, .feedback-section h3, .message-box h3 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .form-control, .form-check-input, .form-select {
+            margin-bottom: 10px;
+        }
+
+        .map-container {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        p a {
+            color: black;
+        }
+    </style>
+    <header>
+        <div class="header-container">
+            <img src="Picture1.png" alt="Ateeq Logo" class="logo">
+            <h1>Contact Us</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="community.html">Community</a></li>
+                    <li><a href="contact(Questionnaire).html">Contact Us</a></li>
+                    <li><a href="myaccount(calculation).html">My Account</a></li>
+                    <li><a href="aboutUs.html">About Us</a></li>
+                    <li><a href="fungame.html">Fun Game</a></li>
+                    <li><a href="manage.php">Manage Products</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+</head>
+<body>
+    <!-- big container -->
+    <div class="container mt-5 pt-5">
+        <!-- section of contact information  -->
+        <div class="contact-info mb-4 p-4 bg-white bg-opacity-75 rounded-3 shadow-sm">
+            <h2 class="text-center mb-3">Contact Information</h2>
+            <p><i class="fas fa-envelope me-2"></i> Email: <a href="mailto:ATEEQ@gmail.com">ATEEQ@gmail.com</a></p>
+            <p><i class="fas fa-phone me-2"></i> Phone: +968 **** ****</p>
+            <p><i class="fab fa-instagram me-2"></i> Instagram: <a href="#">@ATEEQ</a></p>
+            <p><i class="fab fa-twitter me-2"></i> Twitter: <a href="#">@ATEEQ.OM</a></p>
+        </div>
+
+        <!-- section of the message box  -->
+        <div class="message-box p-4 bg-white bg-opacity-75 rounded-3 shadow-sm">
+            <h3 class="text-center mb-3">Send a Message</h3>
+            <form action="process_message.php" method="POST">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name here" class="form-control mb-3">
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email here" class="form-control mb-3">
+
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" placeholder="Enter your message here" class="form-control mb-3"></textarea>
+
+                <button type="submit" class="btn btn-primary w-100">Send</button>
+            </form>
+        </div>
+
+        <!-- section of feedback -->
+        <div class="feedback-section p-4 bg-white bg-opacity-75 rounded-3 shadow-sm">
+            <h3 class="text-center mb-3">Customer Feedback</h3>
+            <form id="feedbackForm" action="process_feedback.php" method="POST" onsubmit="return validateFeedbackForm();">
+                <!-- to add the neme -->
+                <label for="feedbackName" class="form-label">Your Name</label>
+                <input type="text" id="feedbackName" name="feedbackName" placeholder="Enter your name" class="form-control">
+
+                <!-- to add email -->
+                <label for="feedbackEmail" class="form-label">Email Address</label>
+                <input type="email" id="feedbackEmail" name="feedbackEmail" placeholder="Enter your email" class="form-control">
+
+                <!-- to chick the satisfaction -->
+                <label for="satisfaction" class="form-label">How satisfied are you with our service?</label>
+                <select id="satisfaction" name="satisfaction" class="form-select">
+                    <option value="">Select</option>
+                    <option value="Very Satisfied">Very Satisfied</option>
+                    <option value="Satisfied">Satisfied</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Dissatisfied">Dissatisfied</option>
+                    <option value="Very Dissatisfied">Very Dissatisfied</option>
+                </select>
+
+                <!-- checkboxs -->
+                <label class="form-label">What did you like about our service? (Select all that apply)</label>
+                <div class="form-check">
+                    <input type="checkbox" id="serviceQuality" name="serviceQuality" class="form-check-input">
+                    <label for="serviceQuality" class="form-check-label">Service Quality</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="pricing" name="pricing" class="form-check-input">
+                    <label for="pricing" class="form-check-label">Pricing</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" id="support" name="support" class="form-check-input">
+                    <label for="support" class="form-check-label">Customer Support</label>
+                </div>
+
+                <!-- to get feedback messages -->
+                <label for="feedbackMessage" class="form-label">Additional Comments</label>
+                <textarea id="feedbackMessage" name="feedbackMessage" rows="4" placeholder="Enter your feedback" class="form-control"></textarea>
+
+                <button type="submit" class="btn btn-primary w-100 mt-3">Submit Feedback</button>
+            </form>
+        </div>
+
+        <!-- map section -->
+        <div class="map-section mt-5">
+            <h3 class="text-center mb-3">Our Location</h3>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623.1654574649197!2d58.17808627505484!3d23.591423472647826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e8dbd9ff7e85c73%3A0xa800f2bf9532878f!2z2LTYsdmD2Kkg2KfZhNi02YjYp9mGINin2YTYudin2YbYp9iqINin2YTYsdiv2YTZiNmH!5e0!3m2!1sen!2som!4v1699123456789!5m2!1sen!2som" 
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5 py-4">
+        <p>&copy; 2024 Ateeq. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // validefeedbackfrom function for validation Feedback 
+        function validateFeedbackForm() {
+            // validate name length by getint the name from input field and remove  spaces
+            const name = document.getElementById('feedbackName').value.trim(); 
+            if (name.length < 3) { // check if the name is <3 characters long
+                alert("Name must be at least 3 characters long."); // if not, show an alert
+                return false; // no submission
+            }
+    
+            // validate email format by Geting the value of the email and remove spaces
+            const email = document.getElementById('feedbackEmail').value.trim(); 
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // expression pattern that to match a valid email address format
+            if (!emailPattern.test(email)) { // check if the email matches the pattern
+                alert("Please enter a valid email address."); // if not, show an alert
+                return false; // no submission
+            }
+    
+            // validate satisfaction selection geting the selected value from the satisfaction dropdown
+            const satisfaction = document.getElementById('satisfaction').value; 
+            if (satisfaction === "") { // check if a selection is made
+                alert("Please select your satisfaction level."); // if no selection is made, show an alert
+                return false; // no submission
+            }
+    
+            // if all validations is pass
+            alert("Thank you for your feedback!"); // show a thank you message
+            return true; // submitte the form
+        }
+    </script>    
+</body>
+</html>

@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Game</title>
+    <link rel="stylesheet" href="theme.css"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="script.js" defer></script>
+    <header>
+        <style>
+        /* CCS styling */
+            .containergame {
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .gameWrapper {
+                display: flex;
+                justify-content: space-around;
+                align-items: flex-start;
+                width: 90vw;
+                max-width: 800px;
+                gap: 20px;
+            }
+
+            .box {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5px;
+                background-color: rgb(14, 14, 14);
+                padding: 10px;
+                border: 2px solid white;
+                border-radius: 10px;
+                width: 45%;
+                aspect-ratio: 1;
+            }
+    
+            .cells, .puzzle {
+                width: 100%;
+                height: 100%;
+                border: 2px dashed white;
+                background-color: burlywood;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: grab;
+            }
+    
+            .helper-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+    
+         
+        .helper-image {
+            display: none;
+            text-align: center;
+        }
+    
+         
+        .helper-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+    
+         
+        .helper-image img {
+            width: 40%;
+            border: 2px solid white;
+            border-radius: 8px;
+        }
+     
+        .helper-image button {
+            margin-top: 10px;
+        }
+    
+         
+        .helper-button,
+        .result-button {
+            text-align: center;
+        }
+
+    
+        </style>
+
+        <div class="header-container">
+        
+            <img src="Picture1.png" alt="Ateeq Logo" class="logo">
+            <h1>Fun Game</h1>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="community.html">Community</a></li>
+                    <li><a href="contact(Questionnaire).html">Contact Us</a></li>
+                    <li><a href="myaccount(calculation).html">My Account</a></li>
+                    <li><a href="aboutUs.html">About Us</a></li>
+                    <li><a href="tryGame.html">Fun Game</a></li>
+                    <li><a href="manage.php">Manage Products</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>    
+</head>
+    
+
+<body>
+
+<div class="containergame">
+    <div class="gameWrapper">
+        <!-- box for puzzle pieces -->
+        <div class="box" id="piecesContainer"></div>
+
+        <!-- box for the play area -->
+        <div class="box" id="playArea"></div>
+    </div>
+
+    <!-- box for helper section  -->
+    <div class="helper-container">
+        <!-- show button than show image  -->
+        <button class="btn btn-primary" onclick="document.getElementById('helperImage').style.display = 'block';">Show Helper Image</button>
+        
+        <!-- helper image that hidden -->
+        <div class="helper-image" id="helperImage" style="display: none;">
+            <div class="helper-content">
+                <img src="game.jpg" alt="complete image">
+                
+                <!-- hide button to hides the helper image -->
+                <button class="btn btn-secondary" onclick="document.getElementById('helperImage').style.display = 'none';">Hide Helper Image</button>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- tow buttons for submitting the answer or trying again -->
+    <div class="result-button">
+        <button class="btn btn-success" onclick="submitAnswer()">Submit</button>
+        <button class="btn btn-danger" onclick="tryAgain()">Try Again</button>
+    </div>
+</div>
+
+<script>
+    // container for puzzle pieces 
+    const piecesContainer = document.getElementById("piecesContainer");
+    // container for the puzzle slots 
+    const playArea = document.getElementById("playArea");
+    // container for the result message 
+    const resultMessage = document.getElementById("resultMessage");
+    // array to store the image pieces in random order for the game
+    let randomOrderPieces = [];
+    // store the original order 
+    const correctOrder = [
+        "game1.jpg", "game2.jpg", "game3.jpg", "game4.jpg",
+        "game5.jpg", "game6.jpg", "game7.jpg", "game8.jpg",
+        "game9.jpg"
+    ];
+
+    // function to shuffle the pieces 
+    function shufflePieces() {
+        randomOrderPieces = [...correctOrder];  // clone array in the correct order to preserve the original
+        // shuffle the array using Math.random() for random order of the pieces
+        randomOrderPieces.sort(function() {
+            return 0.5 - Math.random(); // random comparison function for sorting
+        });
+    }
+
+    // function to create and place the puzzle pieces 
+    function createPuzzlePieces() {
+        shufflePieces();  // shuffle the pieces when the game starts
+
+        // loop through the shuffled pieces array and create a cell for each piece
+        for (let index = 0; index < randomOrderPieces.length; index++) {
+            const src = randomOrderPieces[index];  // get the source (image) of the current piece
+            const cell = document.createElement("div");  // create a new div for each piece
+            cell.classList.add("cells");  // add a class to style the cell
+            cell.style.backgroundImage = `url(${src})`;  // set the background image of the cell
+            cell.style.backgroundSize = "cover";  // ensure the image covers the entire cell
+            cell.draggable = true;  // make the cell draggable
+            cell.id = `piece-${index}`;  // give the cell a unique ID based on its index
+
+            // event listener for when the drag operation starts
+            cell.addEventListener("dragstart", (event) => {
+                event.dataTransfer.setData("text", event.target.id);  // store the ID of the dragged element for later use
+            });
+
+            // append the created piece cell to the pieces container
+            piecesContainer.appendChild(cell);
+        }
+    }
+
+    // createEmptyCells function to create the empty cells  where the pieces will be placed in the play area
+    function createEmptyCells() {
+        // loop to create 9 empty cells 
+        for (let i = 0; i < 9; i++) {
+            const emptyCell = document.createElement("div");  // create a new div for each empty cell
+            emptyCell.classList.add("puzzle");  // add a class to style the empty cell
+            emptyCell.id = `slot-${i}`;  // give each cell a unique ID based on its index
+
+            // event listener to allow the empty cell to accept dragged pieces
+            emptyCell.addEventListener("dragover", (event) => event.preventDefault());  // allow drag over action
+            emptyCell.addEventListener("drop", (event) => {
+                const draggedId = event.dataTransfer.getData("text");  // get the ID of the dragged element
+                const draggedElement = document.getElementById(draggedId);  // get the dragged element by its ID
+
+                // only append the dragged element if the target slot is empty 
+                if (!event.target.hasChildNodes()) {
+                    event.target.appendChild(draggedElement);  // append the dragged piece to the empty cell
+                }
+            });
+
+            // append the created empty cell to the play area
+            playArea.appendChild(emptyCell);
+        }
+    }
+
+    // creating the puzzle pieces and empty cells to initialize the game
+    createPuzzlePieces();
+    createEmptyCells();
+
+    // submitAnswer function to validate the puzzle solution when the "Submit" button is clicked
+    function submitAnswer() {
+        let correct = 0;  // initialize a counter for the correct pieces
+
+        // loop through each empty cell and check if the piece in the slot is correct
+        for (let i = 0; i < 9; i++) {
+            const slot = document.getElementById(`slot-${i}`);  // get the empty cell (slot)
+            const piece = slot.firstChild;  // get the piece currently in the slot
+
+            // compare the background image of the piece in the slot with the correct order array
+            if (piece && piece.style.backgroundImage.includes(correctOrder[i])) {
+                correct++;  // if the piece matches the correct order, increment the counter
+            }
+        }
+
+        // calculate the percentage of correctly placed pieces
+        const percentage = ((correct / 9) * 100).toFixed(0);
+
+        // show an alert with the result message (percentage of correct pieces)
+        if (percentage == 100) {
+            alert("You got " + percentage + "% correct! Well done!");  // if all pieces are correct
+        } else {
+            alert("You got " + percentage + "% correct. Improve your skills! Try again.");  // if not all pieces are correct
+        }
+    }
+
+    // tryAgain function to reload the page and reset the game when the "Try Again" button is clicked
+    function tryAgain() {
+        location.reload();  // reload the page to reset the game
+    }
+
+        
+</script>
+</body>
+</html>

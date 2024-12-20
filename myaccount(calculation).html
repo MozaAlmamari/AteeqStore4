@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account</title>
+    <link rel="stylesheet" href="theme.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .section {
+            background-color: rgba(255, 255, 255, 0.85); 
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            padding: 20px;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .section:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .profile-info img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #ddd;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .wishlist-item {
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .wishlist-item img {
+            width: auto;
+            height: 300px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .wishlist-item h5 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4a2c2a;
+        }
+
+        .wishlist-item button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .wishlist-item button:hover {
+            background-color: #c82333;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+        }
+
+        .cart-item img {
+            width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .cart-total {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .discount-section {
+            margin-top: 20px;
+        }
+
+        .checkout-btn {
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <img src="Picture1.png" alt="Ateeq Logo" class="logo">
+            <h1>My Account</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="community.html">Community</a></li>
+                    <li><a href="contact(Questionnaire).html">Contact Us</a></li>
+                    <li><a href="myaccount(calculation).html">My Account</a></li>
+                    <li><a href="aboutUs.html">About Us</a></li>
+                    <li><a href="fungame.html">Fun Game</a></li>
+                    <li><a href="manage.php">Manage Products</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        <!-- section for profile information  -->
+        <div class="section">
+            <h2><i class="fas fa-user-circle"></i> Profile Information</h2>
+            <form id="profile-form" class="horizontal-form" method="POST" action="process_profile.php">
+                <div class="profile-info">
+                    <img src="profile.jpg" alt="Profile Picture" id="profile-pic">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="name"><strong>Name:</strong></label>
+                            <input type="text" id="name" name="name" value="Ahmed" class="form-control">
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="email"><strong>Email:</strong></label>
+                            <input type="email" id="email" name="email" value="johndoe@example.com" class="form-control">
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="phone"><strong>Phone:</strong></label>
+                            <input type="tel" id="phone" name="phone" value="+123 456 7890" class="form-control">
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="address"><strong>Address:</strong></label>
+                            <textarea id="address" name="address" class="form-control">1234 Street, City, Country</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- wishlist section -->
+        <div class="section">
+            <h2><i class="fas fa-heart"></i> My Wishlist</h2>
+            <div class="row wishlist" id="wishlist">
+                <!-- wishlist items will be dynamically added -->
+            </div>
+        </div>
+
+        <!-- shopping cart section -->
+        <div class="section">
+            <h2><i class="fas fa-shopping-cart"></i> My Cart</h2>
+            <div id="cartItems">
+                <!-- cart items will be dynamically added -->
+            </div>
+            <div id="cartSummary" style="display: none;" class="mt-4">
+                <h4 class="text-center mb-3">Invoice Summary</h4>
+                <table class="table table-bordered text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Item</th>
+                            <th>Amount (OR)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Subtotal</strong></td>
+                            <td><span id="subtotalPrice">0.00</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tax (5%)</strong></td>
+                            <td><span id="taxAmount">0.00</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Discount</strong></td>
+                            <td><span id="discountAmount">0.00</span></td>
+                        </tr>
+                        <tr class="table-success">
+                            <td><strong>Final Total</strong></td>
+                            <td><span id="finalPrice">0.00</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- discount code section -->
+                <div class="discount-section mt-3">
+                    <label for="discountCode" class="form-label"><strong>Enter Discount Code:</strong></label>
+                    <input type="text" id="discountCode" class="form-control mb-2" placeholder="e.g., A15">
+                    <button class="btn btn-primary w-100" onclick="applyDiscount()">Apply Discount</button>
+                </div>
+                <button class="btn btn-primary checkout-btn" onclick="completeOrder()">Complete Order</button>
+            </div>
+            
+            
+            <p id="emptyCartMessage" style="color: red; font-size: 16px; display: none;">Your cart is empty!</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Ateeq. All rights reserved.</p>
+        <p>Email: <a href="mailto:info@ateeqart.com">info@ateeqart.com</a></p>
+    </footer>
+
+    <script>
+        let subtotal = 0; // initialize subtotal for Total price of all items in the cart
+        let discount = 0; // initialize discount applied based on discount code
+        const taxRate = 0.05; // initialize tax rate fixed tax rate of 5%
+
+        // loadWishlist function to load the wishlist from sessionStorage and display items
+        function loadWishlist() {
+            // retrieve wishlist from sessionStorage, or an empty array if not found
+            const wishlist = JSON.parse(sessionStorage.getItem("wishlist")) || []; 
+            const wishlistContainer = document.getElementById("wishlist"); // get the wishlist container 
+            wishlistContainer.innerHTML = ""; // clear current wishlist content
+
+            if (wishlist.length === 0) {
+                // display message if wishlist is empty
+                wishlistContainer.innerHTML = "<p style='color: red;'>Your wishlist is empty!</p>"; 
+                return;
+            }
+
+            // iterate through each wishlist item and display it
+            wishlist.forEach((item, index) => {
+                const itemDiv = document.createElement("div");
+                itemDiv.classList.add("wishlist-item", "col-md-4"); // add classes for styling
+                itemDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}"> <!-- Display the item's image -->
+                    <h5>${item.name}</h5> <!-- Display the item's name -->
+                    <button onclick="removeFromWishlist(${index})">Remove</button> <!-- Button to remove item from wishlist -->
+                `;
+                wishlistContainer.appendChild(itemDiv); // append the item to the wishlist container
+            });
+        }
+
+        // function to remove an item from the wishlist
+        function removeFromWishlist(index) {
+            let wishlist = JSON.parse(sessionStorage.getItem("wishlist")) || []; // get wishlist from sessionStorage
+            wishlist.splice(index, 1); // remove item at the given index
+            sessionStorage.setItem("wishlist", JSON.stringify(wishlist)); // save the updated wishlist
+            loadWishlist(); // reload the wishlist to reflect changes
+        }
+
+        // function to apply a discount based on a discount code entered by the user
+        function applyDiscount() {
+            const discountCode = document.getElementById("discountCode").value.trim(); // get the entered discount code
+            discount = 0; // reset discount to 0
+
+            // apply discounts based on the entered discount code
+            if (discountCode === "A15") {
+                discount = subtotal * 0.15; // apply 15% discount
+                alert(`Discount applied! You saved ${discount.toFixed(2)} OR.`);
+            } else if (discountCode === "A10") {
+                discount = subtotal * 0.10; // apply 10% discount
+                alert(`Discount applied! You saved ${discount.toFixed(2)} OR.`);
+            } else {
+                alert("Invalid discount code. Please try again."); // show alert for invalid discount codes
+            }
+
+            updateSummary(); // update the invoice summary with the new discount
+        }
+
+        // completeOrder function to complete the order and display a success message
+        function completeOrder() {
+            alert("Order completed successfully! Thank you for shopping.");
+            sessionStorage.removeItem("cart"); // clear the cart data from sessionStorage
+            loadCart(); // reload the cart to show it's empty
+        }
+
+        // loadCart function to load the shopping cart from sessionStorage and display cart items
+        function loadCart() {
+            const cart = JSON.parse(sessionStorage.getItem("cart")) || []; // get cart data from sessionStorage
+            const cartItemsContainer = document.getElementById("cartItems"); // get cart items container element
+            const cartSummary = document.getElementById("cartSummary"); // get cart summary element
+            const emptyCartMessage = document.getElementById("emptyCartMessage"); // get empty cart message element
+
+            cartItemsContainer.innerHTML = ""; // clear the current cart content
+            subtotal = 0; // reset subtotal to 0
+
+            if (cart.length === 0) {
+                cartSummary.style.display = "none"; // hide cart summary if cart is empty
+                emptyCartMessage.style.display = "block"; // show empty cart message
+                return;
+            }
+
+            emptyCartMessage.style.display = "none"; // hide empty cart message if cart is not empty
+            cartSummary.style.display = "block"; // show cart summary
+
+            // iterate through cart items and display them
+            cart.forEach((item, index) => {
+                const itemDiv = document.createElement("div");
+                itemDiv.classList.add("cart-item"); // add class for cart item styling
+                itemDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}"> <!-- Display item image -->
+                    <p>${item.name}</p> <!-- Display item name -->
+                    <p><strong>${item.price.toFixed(2)} OR</strong></p> <!-- Display item price -->
+                    <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button> <!-- Button to remove item from cart -->
+                `;
+                cartItemsContainer.appendChild(itemDiv); // append the item to the cart container
+                subtotal += item.price; // add the item's price to the subtotal
+            });
+
+            updateSummary(); // update the cart summary with the new subtotal
+        }
+
+        // updateSummary function to update the cart summary 
+        function updateSummary() {
+            const tax = subtotal * taxRate; // calculate tax based on subtotal
+            const finalTotal = subtotal + tax - discount; // calculate final total after discount and tax
+
+            // update the summary fields with calculated values
+            document.getElementById("subtotalPrice").textContent = subtotal.toFixed(2);
+            document.getElementById("taxAmount").textContent = tax.toFixed(2);
+            document.getElementById("discountAmount").textContent = discount.toFixed(2);
+            document.getElementById("finalPrice").textContent = finalTotal.toFixed(2);
+        }
+
+        // removeFromCart function to remove an item from the cart
+        function removeFromCart(index) {
+            let cart = JSON.parse(sessionStorage.getItem("cart")) || []; // get cart from sessionStorage
+            cart.splice(index, 1); // remove item at the given index
+            sessionStorage.setItem("cart", JSON.stringify(cart)); // save updated cart
+            loadCart(); // reload the cart to reflect changes
+        }
+
+        // initialize the page when the page loads
+        window.onload = () => {
+            loadWishlist(); // load wishlist
+            loadCart(); // load shopping cart
+        };
+
+    </script>
+    
+</body>
+</html>
